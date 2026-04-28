@@ -36,7 +36,7 @@ if file_foto is not None:
         with st.spinner("AI sedang bekerja..."):
             try:
                 # Memanggil Model AI
-                model = genai.GenerativeModel('gemini-1.5-flash')
+                model = genai.GenerativeModel('gemini-2.0-flash')
                 
                 # Mengirim gambar ke Gemini
                 respon = model.generate_content([
