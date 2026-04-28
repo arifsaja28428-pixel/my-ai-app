@@ -3,7 +3,7 @@ import google.generativeai as genai
 from PIL import Image
 
 # 1. Masukkan API Key Anda di sini
-genai.configure(api_key="PASTE_KODE_API_GEMINI_ANDA_DISINI")
+genai.configure(api_key="AIzaSyDzewUAtveIaBaCDLCLnZny7yRxFN2fG74")
 
 # 2. Desain Tampilan Futuristik
 st.set_page_config(page_title="AI Photo Enhancer Pro", layout="centered")
@@ -27,17 +27,22 @@ st.write("---")
 # 3. Fitur Unggah Foto
 file_foto = st.file_uploader("Unggah foto yang ingin diperbaiki", type=['jpg', 'png', 'jpeg'])
 
-if file_foto:
-    img = Image.open(file_foto)
-    st.image(img, caption="Foto Asli", use_container_width=True)
-    
-    if st.button("PROSES DENGAN AI"):
+if st.button("PROSES DENGAN AI"):
         with st.spinner("Menganalisis detail piksel..."):
-            model = genai.GenerativeModel('gemini-1.5-flash')
-            # Perintah khusus ke AI
-            respon = model.generate_content(["Tolong berikan deskripsi teknis bagaimana cara meningkatkan kualitas foto ini secara drastis dalam hal saturasi, kontras, dan ketajaman.", img])
+            try:
+                model = genai.GenerativeModel('gemini-1.5-flash')
+                
+                # PERBAIKAN DI SINI:
+                # Pastikan API Key sudah benar dan model menerima format yang tepat
+                respon = model.generate_content([
+                    "Tolong berikan deskripsi teknis bagaimana cara meningkatkan kualitas foto ini secara drastis dalam hal saturasi, kontras, dan ketajaman.", 
+                    img
+                ])
+                
+                st.success("Analisis Selesai!")
+                st.subheader("Rekomendasi Perbaikan AI:")
+                st.write(respon.text)
             
-            st.success("Analisis Selesai!")
-            st.subheader("Rekomendasi Perbaikan AI:")
-            st.write(respon.text)
-            st.info("Fitur auto-filter akan diterapkan pada versi Pro.")
+            except Exception as e:
+                st.error(f"Terjadi kesalahan teknis: {e}")
+                st.info("Tips: Pastikan API Key Anda sudah aktif dan kuota gratis masih tersedia.")
