@@ -43,7 +43,7 @@ if file_foto is not None:
         with st.spinner("AI sedang memproses piksel..."):
             try:
                 # Inisialisasi Model
-                model = genai.GenerativeModel('gemini-1.5-flash')
+                model = genai.GenerativeModel('gemini-2.5-flash')
                 
                 # Analisis AI
                 respon = model.generate_content([
